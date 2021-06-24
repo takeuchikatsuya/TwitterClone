@@ -9,7 +9,7 @@ $(function () {
         const like_id = $(this).data('like-id');
         const like_count_obj = $(this).parent().find('.js-like-count');
         let like_count = Number(like_count_obj.html());
- 
+
         if (like_id) {
             // いいね！取り消し
             // いいね！カウントを減らす
