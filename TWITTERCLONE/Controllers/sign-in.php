@@ -1,34 +1,36 @@
-<!DOCTYPE html>
-<html lang="ja">
+<?php
+///////////////////////////////////////
+// サインインコントローラー
+///////////////////////////////////////
  
-<head>
-    <?php include_once('../Views/common/head.php'); ?>
-    <title>ログイン画面 / Twitterクローン</title>
-    <meta name="description" content="ログイン画面です">
-</head>
+// 設定を読み込み
+include_once '../config.php';
+// 便利な関数を読み込み
+include_once '../util.php';
  
-<body class="signup text-center">
-    <main class="form-signup">
-        <form action="sign-in.php" method="post">
-            <img src="<?php echo HOME_URL; ?>Views/img/logo-white.svg" alt="" class="logo-white">
-            <h1>Twitterクローンにログイン</h1>
+// ユーザーデータ操作モデルを読み込み
+include_once '../Models/users.php';
  
-            <?php if (isset($view_try_login_result) && $view_try_login_result === false) : ?>
-                <!-- ログインに失敗した場合 -->
-                <div class="alert alert-warning text-sm" role="alert">
-                    ログインに失敗しました。メールアドレス、パスワードが正しいかご確認下さい。
-                </div>
-            <?php endif; ?>
+// ログインチェック
+$try_login_result = null;
+if (isset($_POST['email']) && isset($_POST['password'])) {
+    // ログインチェック実行
+    $user = findUserAndCheckPassword($_POST['email'], $_POST['password']);
  
-            <input type="email" class="form-control" name="email" placeholder="メールアドレス" required autofocus>
-            <input type="password" class="form-control" name="password" placeholder="パスワード" required>
-            <button class="w-100 btn btn-lg" type="submit">ログイン</button>
-            <p class="mt-3 mb-2"><a href="sign-up.php">会員登録する</a></p>
-            <p class="mt-2 mb-3 text-muted">&copy; 2021</p>
-        </form>
-    </main>
+    if ($user) {
+        // ログイン成功
+        // ユーザー情報をセッションに保存
+        saveUserSession($user);
  
-    <?php include_once('../Views/common/foot.php'); ?>
-</body>
+        // ホーム画面へ遷移
+        header('Location: ' . HOME_URL . 'Controllers/home.php');
+        exit;
+    } else {
+        // ログイン失敗
+        $try_login_result = false;
+    }
+}
  
-</html>
+// 画面表示
+$view_try_login_result = $try_login_result;
+include_once '../Views/sign-in.php';
