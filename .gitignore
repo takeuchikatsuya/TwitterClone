@@ -4,3 +4,9 @@ php
 portfolio
 project_intee
 TWITTERCLONE/views/__MACOSX/img/._.DS_Store
+# OSが自動生成するファイル
+.DS_Store
+ 
+# ダンプファイル
+/twitter_clone_backup.sql
+/twitter_clone_testdata.sql
