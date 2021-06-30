@@ -10,3 +10,4 @@ TWITTERCLONE/views/__MACOSX/img/._.DS_Store
 # ダンプファイル
 /twitter_clone_backup.sql
 /twitter_clone_testdata.sql
+TWITTERCLONE/views/js/like2.js
